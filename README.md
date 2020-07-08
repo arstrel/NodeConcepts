@@ -6,13 +6,14 @@ This is the approximate plan of action:
 2. Connecting to remote MondoDB
 3.  Data caching with Redis
     - [x] Connect redis server that runs on local machine
-    - [x] Create a 'cache' function on mongoose.Query.prototype to signal that this query instance needs to use caching
+    - [x] Create a chainable 'cache' function on mongoose.Query.prototype to signal that this query instance needs to use caching
     - [x] Modify mongoose exec function to use redis caching
-    - [x] Create 'cleanCache' function to make sure we can clean the cache when needed
+    - [x] Create 'cleanCache' middleware to make sure we can clean the cache when needed. It need to work after the route handler.
 4. Automated Headless Browser Testing (Integration testing)
     - [x] Make use of Jest test suite
-    - [x] Boot up 'headless' version of Chromium to visit 'localhost:3000' and ineract with the app such as the user will do.
+    - [x] Boot up 'headless' version of Chromium with puppeteer. Visit 'localhost:3000' and ineract with the app such as the user will do.
     - [x] Handle authentication via Google OAuth in testing environment
-    - [ ] Write some tests to make an assertion about the content on the 'virtual screen'
+    - [x] Write some tests to make an assertion about the content on the 'virtual screen'
+    - [x] Add testing factory functions for creating Users and Sessions
 5. Continuous Integration (CI)
 6. Image/File upload scalable AWS S3 solution 
