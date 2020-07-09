@@ -15,5 +15,6 @@ This is the approximate plan of action:
     - [x] Handle authentication via Google OAuth in testing environment
     - [x] Write some tests to make an assertion about the content on the 'virtual screen'
     - [x] Add testing factory functions for creating Users and Sessions
+    - [x] Make use of Proxy and Reflect to extend puppeteer Page class with login functionality
 5. Continuous Integration (CI)
 6. Image/File upload scalable AWS S3 solution 

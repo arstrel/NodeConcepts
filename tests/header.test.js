@@ -35,20 +35,34 @@ test("Login button leads to Google OAuth flow", async () => {
 });
 
 test("When signed in shows logout button", async () => {
-  const user = await userFactory();
-  const { session, sig } = sessionFactory(user);
-  const cookies = [
-    {
-      name: "session",
-      value: session,
+  async function login() {
+    const user = await userFactory();
+    const { session, sig } = sessionFactory(user);
+    const cookies = [
+      {
+        name: "session",
+        value: session,
+      },
+      {
+        name: "session.sig",
+        value: sig,
+      },
+    ];
+    await this.setCookie(...cookies);
+    await this.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+  }
+
+  const loginHandler = {
+    get: function (target, prop, receiver) {
+      if (prop === "login") {
+        return login;
+      }
+      return Reflect.get(...arguments);
     },
-    {
-      name: "session.sig",
-      value: sig,
-    },
-  ];
-  await page.setCookie(...cookies);
-  await page.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
+  };
+  const superPage = new Proxy(page, loginHandler);
+
+  await superPage.login();
   const text = await page.$eval('a[href="/auth/logout"]', (el) => el.innerHTML);
   expect(text).toEqual("Logout");
 });
