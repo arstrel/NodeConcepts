@@ -1,6 +1,5 @@
 const puppeteer = require("puppeteer");
-const sessionFactory = require("./factories/sessionFactory");
-const userFactory = require("./factories/userFactory");
+const { withLogin, removeTestUsers } = require("./utils");
 
 const url = process.env.TEST_DOMAIN_URL || "http://localhost:3000";
 
@@ -11,7 +10,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  page = await browser.newPage();
+  const standardPage = await browser.newPage();
+  page = await withLogin(standardPage);
   await page.goto(url);
 });
 
@@ -20,6 +20,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  await removeTestUsers();
   browser.close();
 });
 
@@ -35,34 +36,7 @@ test("Login button leads to Google OAuth flow", async () => {
 });
 
 test("When signed in shows logout button", async () => {
-  async function login() {
-    const user = await userFactory();
-    const { session, sig } = sessionFactory(user);
-    const cookies = [
-      {
-        name: "session",
-        value: session,
-      },
-      {
-        name: "session.sig",
-        value: sig,
-      },
-    ];
-    await this.setCookie(...cookies);
-    await this.reload({ waitUntil: ["networkidle0", "domcontentloaded"] });
-  }
-
-  const loginHandler = {
-    get: function (target, prop, receiver) {
-      if (prop === "login") {
-        return login;
-      }
-      return Reflect.get(...arguments);
-    },
-  };
-  const superPage = new Proxy(page, loginHandler);
-
-  await superPage.login();
+  await page.login();
   const text = await page.$eval('a[href="/auth/logout"]', (el) => el.innerHTML);
   expect(text).toEqual("Logout");
 });
