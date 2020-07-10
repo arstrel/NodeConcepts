@@ -12,8 +12,7 @@ cache:
         - node_modules
         - client/node_modules
 install:
-    - npm install -g npm@3.10.7
-    - npm install
+    - npm install --no-optional
     - npm run build
 script:
     - nohup npm run start &
