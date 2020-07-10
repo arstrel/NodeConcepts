@@ -1,4 +1,5 @@
 # Advanced Node Concepts
+[![Build Status](https://travis-ci.org/arstrel/NodeConcepts.svg?branch=master)](https://travis-ci.org/arstrel/NodeConcepts)
 Example node - express - react - redux app to learn and showcase some node concepts. The react front end part of the app is just enough to enable me to learn and showcase the node concepts. 
 
 This is the approximate plan of action:
