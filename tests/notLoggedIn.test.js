@@ -33,9 +33,7 @@ describe("When NOT logged in", () => {
 
   test("Blog related actions are prohibited", async () => {
     const responses = await page.execRequests(actions);
-    const result = responses.every(
-      (r) => r.error === "You must log in!"
-    );
+    const result = responses.every((r) => r.error === "You must log in!");
     expect(result).toBeTruthy();
   });
 });

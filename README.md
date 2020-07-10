@@ -17,4 +17,6 @@ This is the approximate plan of action:
     - [x] Add testing factory functions for creating Users and Sessions
     - [x] Create a wrapper class and make use of Proxy to extend puppeteer Page class with login functionality
 5. Continuous Integration (CI)
+    - [x] Make use of Travis CI
+    - [x] Dig into CI behind the scenes, Travis CI setup options
 6. Image/File upload scalable AWS S3 solution 

@@ -1,5 +1,7 @@
 require('../models/User');
 require('../models/Blog');
+const dotenv = require('dotenv');
+const result = dotenv.config();
 const mongoose = require("mongoose");
 const keys = require("../config/keys");
 
