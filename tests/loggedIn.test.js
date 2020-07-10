@@ -16,7 +16,9 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
+  if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
     await removeTestRecords();
+  }
 });
 
 describe("When loggen in", async () => {
@@ -45,4 +47,3 @@ describe("When loggen in", async () => {
     expect(text).toEqual("Please confirm your entries");
   });
 });
-
