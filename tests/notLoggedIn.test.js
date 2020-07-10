@@ -15,6 +15,10 @@ afterEach(async () => {
   await page.close();
 });
 
+afterAll(async (done) => {
+  done();
+});
+
 describe("When NOT logged in", () => {
   const actions = [
     {

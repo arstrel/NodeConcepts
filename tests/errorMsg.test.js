@@ -14,6 +14,11 @@ afterEach(async () => {
   await page.close();
 });
 
+
+afterAll(async (done) => {
+  done();
+});
+
 describe("and using INvalid inputs", async () => {
   beforeEach(async () => {
     try {

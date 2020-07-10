@@ -15,6 +15,10 @@ afterEach(async () => {
   await page.close();
 });
 
+afterAll(async (done) => {
+  done();
+});
+
 test("submitting then saving adds post to all posts index page", async () => {
     try {
       await page.login();
