@@ -1,31 +1,22 @@
-const puppeteer = require("puppeteer");
-const { withLogin, removeTestUsers } = require("./utils");
+const Page = require("./helpers/page");
+const { removeTestUsers } = require("./helpers/utils");
+const constants = require('./constants');
 
-const url = process.env.TEST_DOMAIN_URL || "http://localhost:3000";
+const url = process.env.TEST_DOMAIN_URL || constants.TEST_LOCALHOST;
 
-let browser, page;
-
-beforeAll(async () => {
-  browser = await puppeteer.launch();
-});
+let page;
 
 beforeEach(async () => {
-  const standardPage = await browser.newPage();
-  page = await withLogin(standardPage);
+  page = await Page.build();
   await page.goto(url);
 });
 
 afterEach(async () => {
-  await page.close();
-});
-
-afterAll(async () => {
-  await removeTestUsers();
-  browser.close();
+  await page.close(); 
 });
 
 test("The header has a correct text", async () => {
-  const text = await page.$eval("a.brand-logo", (el) => el.innerHTML);
+  const text = await page.getContentsOf("a.brand-logo");
   expect(text).toEqual("Blogster");
 });
 
@@ -37,6 +28,7 @@ test("Login button leads to Google OAuth flow", async () => {
 
 test("When signed in shows logout button", async () => {
   await page.login();
-  const text = await page.$eval('a[href="/auth/logout"]', (el) => el.innerHTML);
+  const text = await page.getContentsOf('a[href="/auth/logout"]');
   expect(text).toEqual("Logout");
 });
+
