@@ -1,5 +1,6 @@
 const Page = require("./helpers/page");
 const constants = require("./constants");
+const { response } = require("express");
 
 const url = process.env.TEST_DOMAIN_URL || constants.TEST_LOCALHOST;
 
@@ -15,35 +16,26 @@ afterEach(async () => {
 });
 
 describe("When NOT logged in", () => {
-  test("cannot create a post", async () => {
-    const response = await page.evaluate(() => {
-      return fetch("/api/blogs", {
-        method: "POST",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: "Not logged in title",
-          content: "Not logged in content",
-        }),
-      }).then((res) => res.json());
-    });
-    expect(response.error).toBeTruthy();
-    expect(response.error).toEqual("You must log in!");
-  });
+  const actions = [
+    {
+      method: "get",
+      path: "/api/blogs",
+    },
+    {
+      method: "post",
+      path: "/api/blogs",
+      body: {
+        title: "Reasonable title",
+        content: "Some content",
+      },
+    },
+  ];
 
-  test("cannot get a list of posts", async () => {
-    const response = await page.evaluate(() => {
-      return fetch("/api/blogs", {
-        method: "GET",
-        credentials: "same-origin",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
-    });
-    expect(response.error).toBeTruthy();
-    expect(response.error).toEqual("You must log in!");
+  test("Blog related actions are prohibited", async () => {
+    const responses = await page.execRequests(actions);
+    const result = responses.every(
+      (r) => r.error === "You must log in!"
+    );
+    expect(result).toBeTruthy();
   });
 });
