@@ -1,5 +1,4 @@
 const Page = require("./helpers/page");
-const { removeTestUsers } = require("./helpers/utils");
 const constants = require("./constants");
 
 const url = process.env.TEST_DOMAIN_URL || constants.TEST_LOCALHOST;

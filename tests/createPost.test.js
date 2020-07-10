@@ -19,16 +19,16 @@ test("submitting then saving adds post to all posts index page", async () => {
     try {
       await page.login();
       await page.click('a[href="/blogs/new"]');
-      await page.type(".title input", "Fresh");
-      await page.type(".content input", "Have a smoothie");
+      await page.type(".title input", constants.TEST_POST_TITLE);
+      await page.type(".content input", constants.TEST_POST_CONTENT);
       await page.click("form button");
       await page.click("button.green");
       await page.waitForSelector(".card");
       const title = await page.getContentsOf(".card-title");
       const content = await page.getContentsOf(".card-content p");
-      expect(title).toEqual("Fresh");
-      expect(content).toEqual("Have a smoothie");
+      expect(title).toEqual(constants.TEST_POST_TITLE);
+      expect(content).toEqual(constants.TEST_POST_CONTENT);
     } catch (err) {
-      console.log("BS error: ", err);
+      console.log("Create full post error: ", err);
     }
   });
