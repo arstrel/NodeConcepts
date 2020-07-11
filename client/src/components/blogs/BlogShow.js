@@ -1,15 +1,30 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchBlog } from '../../actions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchBlog } from "../../actions";
 
 class BlogShow extends Component {
   componentDidMount() {
     this.props.fetchBlog(this.props.match.params._id);
   }
 
+  renderImage() {
+    const { imageUrl } = this.props.blog;
+    if (imageUrl) {
+      return (
+        <div className='row'>
+          <img
+            src={`${process.env.REACT_APP_AWS_S3_URL}${imageUrl}`}
+            alt="blog pic"
+            className="col s10 offset-s1"
+          />
+        </div>
+      );
+    }
+  }
+
   render() {
     if (!this.props.blog) {
-      return '';
+      return "";
     }
 
     const { title, content } = this.props.blog;
@@ -18,6 +33,7 @@ class BlogShow extends Component {
       <div>
         <h3>{title}</h3>
         <p>{content}</p>
+        {this.renderImage()}
       </div>
     );
   }

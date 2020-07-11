@@ -24,6 +24,5 @@ Example node - express - react - redux app to learn and showcase some node conce
 6. Image/File upload scalable AWS S3 solution  
     - [x] Add file upload picker to react and change post adding logic
     - [x] Set S3 bucket, add user and restriction policy
-    - [x] Add upload route to retrieve AWS pre-signed url
-    - [ ] Avoid using this node server as a file temp storage/middleman
-    - [ ] Make use of pre-signed urls to upload from react directly to S3
+    - [x] Add upload route and use aws-sdk to retrieve AWS pre-signed url to avoid using this node server as a file temp storage/middleman
+    - [x] Make use of pre-signed urls to upload from react directly to S3
