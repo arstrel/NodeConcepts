@@ -13,8 +13,9 @@ export const handleToken = token => async dispatch => {
   dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const submitBlog = (values, history) => async dispatch => {
+export const submitBlog = (values, file, history) => async dispatch => {
   const res = await axios.post('/api/blogs', values);
+  // Get AWS link
 
   history.push('/blogs');
   dispatch({ type: FETCH_BLOG, payload: res.data });
