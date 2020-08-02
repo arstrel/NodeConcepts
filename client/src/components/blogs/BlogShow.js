@@ -9,11 +9,12 @@ class BlogShow extends Component {
 
   renderImage() {
     const { imageUrl } = this.props.blog;
+    const AWS_S3_URL = 'https://blogster-app.s3-us-west-2.amazonaws.com/';
     if (imageUrl) {
       return (
         <div className='row'>
           <img
-            src={`${process.env.REACT_APP_AWS_S3_URL}${imageUrl}`}
+            src={`${process.env.REACT_APP_AWS_S3_URL || AWS_S3_URL}${imageUrl}`}
             alt="blog pic"
             className="col s10 offset-s1"
           />
