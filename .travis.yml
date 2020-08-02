@@ -1,20 +1,25 @@
 language: node_js
-node_js: 
-    - 12
+node_js:
+- 12
 dist: trusty
 services:
-    - mongodb
-    - redis-server
+- mongodb
+- redis-server
 env:
-    - NODE_ENV=ci PORT=3000
+- NODE_ENV=ci PORT=3000
 cache:
-    directories:
-        - node_modules
-        - client/node_modules
+  directories:
+  - node_modules
+  - client/node_modules
 install:
-    - npm install --no-optional
-    - npm run build
+- npm install --no-optional
+- npm run build
 script:
-    - nohup npm run start &
-    - sleep 3
-    - npm run test
+- nohup npm run start &
+- sleep 3
+- npm run test
+deploy:
+  provider: heroku
+  app: node-blogster
+  api_key:
+    secure: bK6A3qaBUPJQifqMabaWNGhNaxD35jegAIORnY2I6jqSk5uxmh2wGBnKUctjrqNDmX3sAPS1NCAeBtDsQFodO/4Xfq2KP57Qeh6CImehWgKT4UYhyV7pxWRbvS3tiKLBSA66PhRWDBq6IoSefJ7PX1sY66ayac30VcT61Q26L74AEOs1aXo7iVsfjtwxMY5WxNGJ/kN4KxtZMjewTK4CTDLUbeF/TBQtq27S1Wub2F7RQq65HrKSFp/3Z2mrguu8KUbFk9h8qmkipolkJfO81aoYQsAvlkXtUD9ZVL9SJ6DVbw/EkFBJ+MB11MeN1PvWi4GAsNFUOYZ3RcKroaJ3dh9ZdsUDlS7r6n6BwQMG9K2s+5m0318z8MKIGiGpwtdaFe6BrvPUrwAqa1992oySpEL0CzykZJ6CVOBA/acMKOpnbl4+FMZ8MZncw52oUs6fV6c/K8FVp6gAAoZV6Iwq2yaD7/uRaIrsxqWy0PFWsUF/pBaPbd131PLaTjLw1gWIAJCL/AAMQDClctzwTk4BVoIOo5j1Wyce0d4XEb4qh+pd8Yw5ZBhPdxGI6yQtjuB5Z/B50nExjSwiuA6SZWIoj+0apq+E3rLFpwRVluLDBeKSLxC6ENLw50GrrH12X7B6PohhFiYVP8q/+ZQ2bKGATSFSzbtbCoreLAV9i/2WEPs=
