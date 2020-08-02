@@ -3,7 +3,7 @@ const redis = require("redis");
 const util = require("util");
 const keys = require('../config/keys');
 
-const client = redis.createClient(keys.redisUrl);
+const client = redis.createClient(process.env.REDIS_URL || keys.redisUrl);
 // Make sure client.get returns promise instead of requiring a callback function
 client.hget = util.promisify(client.hget);
 
