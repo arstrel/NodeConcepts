@@ -9,6 +9,8 @@ import Dashboard from './Dashboard';
 import BlogNew from './blogs/BlogNew';
 import BlogShow from './blogs/BlogShow';
 
+require('dotenv').config()
+
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
