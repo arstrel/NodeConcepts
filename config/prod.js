@@ -5,4 +5,5 @@ module.exports = {
   cookieKey: process.env.COOKIE_KEY,
   accessKeyId: process.env.AWS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_KEY,
+  hostUrl: process.env.HOST_URL,
 };

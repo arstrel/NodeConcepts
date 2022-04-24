@@ -10,7 +10,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  User.findById(id).then(user => {
+  User.findById(id).then((user) => {
     done(null, user);
   });
 });
@@ -18,7 +18,7 @@ passport.deserializeUser((id, done) => {
 passport.use(
   new GoogleStrategy(
     {
-      callbackURL: '/auth/google/callback',
+      callbackURL: `${keys.hostUrl || ''}/auth/google/callback`,
       clientID: keys.googleClientID,
       clientSecret: keys.googleClientSecret,
     },
@@ -30,7 +30,7 @@ passport.use(
         }
         const user = await new User({
           googleId: profile.id,
-          displayName: profile.displayName
+          displayName: profile.displayName,
         }).save();
         done(null, user);
       } catch (err) {
